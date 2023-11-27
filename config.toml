@@ -1,61 +1,60 @@
-
 [global]
-root = '.'
+root = '.'                   # Root directory
 random_seed = 3407
 
 [train]
-cutoff = 4.0 
-val_ratio = 0.1
-num_interactions = 3
-node_size = 128
-output_dir = 'model_output'
-dataset = '/content/drive/My Drive/my-path-to/tutorial-video/4waters.traj'
-max_steps = 2000
-device = 'cuda'
-batch_size = 32 
-initial_lr = 0.001 
-forces_weight = 0.98
-log_interval = 200
-normalization = false
-atomwise_normalization = false
-stop_patience = 1000
-plateau_scheduler = true
-random_seed = 3407
+cutoff = 4.0                 # Cutoff radius of machine learning potential
+val_ratio = 0.1              # The ratio of validation points in the provided dataset
+num_interactions = 3         # Number of message-passing layers
+node_size = 128              # Node feature size
+output_dir = 'model_output'  # Model output path
+dataset = '/content/drive/My Drive/my-path-to/tutorial-video/4waters.traj'  # Dataset for training
+max_steps = 2000             # Maximum steps for training
+device = 'cuda'              # Use GPU
+batch_size = 32              # Batch size for training
+initial_lr = 0.001           # Initial learning rate
+forces_weight = 0.98         # Ratio of force loss to total loss
+log_interval = 200            # Evaluate model every 200 steps
+normalization = false        # Normalize energy in the dataset
+atomwise_normalization = false  # Normalize atomic energy, scale the output atomic energy to the same level.
+stop_patience = 1000         # When test loss is larger than training loss for p times, training stops.
+plateau_scheduler = true     # Use ReduceLROnPlateau scheduler to decrease lr when learning curve plateaus
+random_seed = 3407           # Random seed ensures the reproducibility of experiments
 
 [train.ensemble]
 108_node_3_layer = {node_size = 108, num_interactions = 3}
 112_node_3_layer = {node_size = 112, num_interactions = 3}
-#116_node_3_layer = {node_size = 116, num_interactions = 3}
-#124_node_3_layer = {node_size = 124, num_interactions = 3}
+#116_node_3_layer = {node_size = 116, num_interactions = 3}  # Commented out
+#124_node_3_layer = {node_size = 124, num_interactions = 3}  # Commented out
+
 [train.resource]
-tmax = '10h'
-cores = 8
+tmax = '10h'                 # Time limit for each job
+cores = 8                    # Cores on the node
 
 [MD.runs.water]
-init_traj = '/content/drive/MyDrive/my-path-to/tutorial-video/4waters.traj'
-time_step = 0.1
-temperature = 300
-device = 'cuda'
-start_indice = 1
-max_steps = 3000
-min_steps = 150
-dump_step = 5
-friction= 0.01
-print_step = 2
-num_uncertain = 100
-random_seed = 3407
+init_traj = '/content/drive/MyDrive/my-path-to/tutorial-video/4waters.traj'  # Initial configuration for running MD
+time_step = 0.1              # Time step for MD
+temperature = 300            # Temperature for MD
+device = 'cuda'              # Use GPU
+start_indice = 1             # Select initial configuration
+max_steps = 3000             # Maximum MD steps
+min_steps = 150              # Minimum MD steps
+dump_step = 5                # Dump a structure for every 5 steps
+friction = 0.01              # Friction coefficient
+print_step = 2               # Print MD info for every 2 steps
+num_uncertain = 100          # If 100 uncertain structures are collected, the simulation stops
+random_seed = 3407           # Reproducibility
 
 [MD.resource]
-#tmax = '10h'
-cores = 1
+#tmax = '10h'                # Commented out
+cores = 1                    # Cores on the node
 
 [select.runs]
-water = {'method' = 'MD', 'train_set' = '/content/drive/My Drive/my-path-to/tutorial-video/4waters.traj','kernel' = 'full-g','selection' = 'lcmd_greedy','n_random_features' = 500,'batch_size' = 10, 'device' = 'cuda','random_seed'=  3407}
- 
+water = {'method' = 'MD', 'train_set' = '/content/drive/My Drive/my-path-to/tutorial-video/4waters.traj', 'kernel' = 'full-g', 'selection' = 'lcmd_greedy', 'n_random_features' = 500, 'batch_size' = 10, 'device' = 'cuda', 'random_seed' = 3407}
 
 [select.resource]
-tmax = '10h'
-cores = 1
+tmax = '10h'                 # Time limit for each job
+cores = 1                    # Cores on the node
 
 [labeling.runs]
 method = 'GPAW'
@@ -64,6 +63,5 @@ method = 'GPAW'
 nupdown = 48
 
 [labeling.resource]
-tmax = '10h'
-cores = 1
-
+tmax = '10h'                 # Time limit for each job
+cores = 1                    # Cores on the node
