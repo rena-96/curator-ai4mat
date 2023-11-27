@@ -9,3 +9,5 @@ In order to do the tutorial:
 2. Upload it on Google Colab (you need GPUs)
 3. Open the .ipynb and follow the instructions of the tutorial
 4. Done! 
+
+For any problems, please feel free to contact us, you can find the e-mails in the tutorial paper.
