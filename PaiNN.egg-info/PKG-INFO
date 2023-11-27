@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: PaiNN
+Version: 1.0.0
+Summary: Library for implementation of message passing neural networks in Pytorch
+Home-page: https://github.com/Yangxinsix/PaiNN-model
+Author: xinyang
+Author-email: xinyang@dtu.dk

@@ -1,0 +1,69 @@
+
+[global]
+root = '.'
+random_seed = 3407
+
+[train]
+cutoff = 4.0 
+val_ratio = 0.1
+num_interactions = 3
+node_size = 128
+output_dir = 'model_output'
+dataset = '/content/drive/My Drive/my-path-to/tutorial-video/4waters.traj'
+max_steps = 2000
+device = 'cuda'
+batch_size = 32 
+initial_lr = 0.001 
+forces_weight = 0.98
+log_interval = 200
+normalization = false
+atomwise_normalization = false
+stop_patience = 1000
+plateau_scheduler = true
+random_seed = 3407
+
+[train.ensemble]
+108_node_3_layer = {node_size = 108, num_interactions = 3}
+112_node_3_layer = {node_size = 112, num_interactions = 3}
+#116_node_3_layer = {node_size = 116, num_interactions = 3}
+#124_node_3_layer = {node_size = 124, num_interactions = 3}
+[train.resource]
+tmax = '10h'
+cores = 8
+
+[MD.runs.water]
+init_traj = '/content/drive/MyDrive/my-path-to/tutorial-video/4waters.traj'
+time_step = 0.1
+temperature = 300
+device = 'cuda'
+start_indice = 1
+max_steps = 3000
+min_steps = 150
+dump_step = 5
+friction= 0.01
+print_step = 2
+num_uncertain = 100
+random_seed = 3407
+
+[MD.resource]
+#tmax = '10h'
+cores = 1
+
+[select.runs]
+water = {'method' = 'MD', 'train_set' = '/content/drive/My Drive/my-path-to/tutorial-video/4waters.traj','kernel' = 'full-g','selection' = 'lcmd_greedy','n_random_features' = 500,'batch_size' = 10, 'device' = 'cuda','random_seed'=  3407}
+ 
+
+[select.resource]
+tmax = '10h'
+cores = 1
+
+[labeling.runs]
+method = 'GPAW'
+
+[labeling.runs.water]
+nupdown = 48
+
+[labeling.resource]
+tmax = '10h'
+cores = 1
+
